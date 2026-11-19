@@ -36,7 +36,10 @@ async function imageFor(post, outName) {
   try {
     if (post.photo) return store.makeImage(await download(post.photo.at(-1).file_id, "jpg"), outName, false);
     if (post.video) {
-      if ((post.video.file_size || 0) <= 20e6) return store.makeImage(await download(post.video.file_id, "mp4"), outName, true);
+      if (store.HAS_FFMPEG && (post.video.file_size || 0) <= 20e6) {
+        const img = store.makeImage(await download(post.video.file_id, "mp4"), outName, true);
+        if (img) return img;
+      }
       const th = post.video.thumbnail || post.video.thumb;
       if (th) return store.makeImage(await download(th.file_id, "jpg"), outName, false);
     }
