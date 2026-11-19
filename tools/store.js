@@ -27,9 +27,17 @@ function save(db) {
 }
 
 /* Rasmni saytga moslash: eni 900px, JPEG. Video bo'lsa — 1-soniyadagi kadr. */
+const HAS_FFMPEG = spawnSync("ffmpeg", ["-version"]).status === 0;
+
 function makeImage(input, outName, isVideo) {
   fs.mkdirSync(IMG_DIR, { recursive: true });
   const out = path.join(IMG_DIR, outName);
+  if (!HAS_FFMPEG) {
+    // ffmpeg yo'q: rasm shundayicha saqlanadi, video o'tkazib yuboriladi
+    if (isVideo) return null;
+    fs.copyFileSync(input, out);
+    return `images/tg/${outName}`;
+  }
   const args = ["-y", "-loglevel", "error"];
   if (isVideo) args.push("-ss", "1");
   args.push("-i", input, "-frames:v", "1", "-vf", "scale='min(900,iw)':-2", "-q:v", "4", out);
@@ -63,4 +71,4 @@ function upsert(db, product) {
   else db.products.push(product);
 }
 
-module.exports = { load, save, makeImage, toProduct, upsert, IMG_DIR, ROOT };
+module.exports = { load, save, makeImage, toProduct, upsert, IMG_DIR, ROOT, HAS_FFMPEG };
