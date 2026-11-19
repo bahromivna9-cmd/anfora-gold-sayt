@@ -31,6 +31,7 @@ const FEATURED = (() => {
 const $ = (s) => document.querySelector(s);
 const icon = (id) => `<svg class="i"><use href="#${id}"/></svg>`;
 const tgLink = (text) => `https://t.me/${CONTACT.telegram}?text=${encodeURIComponent(text)}`;
+const postLink = (p) => (p && /^\d+$/.test(String(p.id)) ? `https://t.me/${(typeof CONTACT !== "undefined" && CONTACT.channel) || "anfora_gold"}/${p.id}` : "");
 const byId = (id) => PRODUCTS.find((p) => String(p.id) === String(id));
 const isSize = (p) => p.vlabel === "O'lcham";
 const variantText = (p, v) => (isSize(p) ? `${v[0]} o'lcham — ${v[1]}` : `${v[0]} — ${v[1]}`);
@@ -44,6 +45,7 @@ function summary(p) {
     return `${s[0] === s.at(-1) ? s[0] : `${s[0]}–${s.at(-1)}`} o'lcham · ${wr} g`;
   }
   if (p.vlabel === "Harf") return `${p.variants.length} xil harf · ${p.variants[0][1]} dan`;
+  if (p.vlabel === "Tarkibi") return p.variants.map((v) => `${v[0].split(",")[0].replace("Bo'yin zanjir", "Zanjir")} ${v[1]}`).join(" · ");
   return p.variants.map((v) => v[1]).join(" + ");
 }
 
@@ -161,7 +163,7 @@ function renderModal() {
   const s = st(p);
   $("#mStatus").className = "status " + s.cls;
   $("#mStatus").textContent = s.label;
-  $("#mDate").textContent = p.date ? `Telegram kanalda: ${fmtDate(p.date)}` : "";
+  $("#mDate").innerHTML = (p.date ? `Telegram kanalda: ${fmtDate(p.date)}` : "") + (postLink(p) ? ` · <a href="${postLink(p)}" target="_blank" rel="noopener">Postni ko'rish (№${p.id})</a>` : "");
   const est = estimate(p, modalV);
   $("#mPrice").innerHTML = est
     ? `Taxminiy narx: <b>${fmtMoney(est)}</b><br><small>1 gramm — ${fmtMoney(SETTINGS.pricePerGram)}${SETTINGS.priceDate ? " (" + fmtDate(SETTINGS.priceDate) + ")" : ""}. Aniq narx sotuvchi tomonidan tasdiqlanadi.</small>`
@@ -173,7 +175,7 @@ function renderModal() {
        <p class="f-weight">Og'irligi: <b>${v[1]}</b></p>`
     : `<ul class="spec">${p.variants.map((x) => `<li><span>${x[0]}</span><b>${x[1]}</b></li>`).join("")}</ul>`;
   const what = choosable ? `${p.name} (${variantText(p, v)})` : `${p.name} (${p.variants.map((x) => variantText(p, x)).join(", ")})`;
-  $("#mOrder").href = tgLink(`Assalomu alaykum! Saytdan yozyapman: ${what}. ${isSold(p) ? "Shunga o'xshash buyum bormi?" : "Narxi qancha va hozir bormi?"}`);
+  $("#mOrder").href = tgLink(`Assalomu alaykum! Saytdan yozyapman: ${what}${postLink(p) ? " — " + postLink(p) : ""}. ${isSold(p) ? "Shunga o'xshash buyum bormi?" : "Narxi qancha va hozir bormi?"}`);
 }
 function addModalToCart() {
   const p = modalP;
@@ -205,6 +207,7 @@ function changeQty(key, d) {
 }
 function saveCart() { safeSet("ag_cart2", JSON.stringify(state.cart)); renderCart(); }
 function renderCart() {
+  state.cart = state.cart.filter((c) => byId(c.id)); // eski/yo'q mahsulotlarni olib tashlash
   const count = state.cart.reduce((s, c) => s + c.qty, 0);
   $("#cartCount").textContent = count || "";
   $("#cartCount2").textContent = count || "";
@@ -220,13 +223,15 @@ function renderCart() {
   $("#cartList").innerHTML = state.cart.length
     ? state.cart.map((c) => `<div class="c-item">
         <img class="c-img" src="${byId(c.id)?.img || ""}" alt="">
-        <div class="txt"><h4>${c.name}</h4><small>${c.meta}</small></div>
+        <div class="txt"><h4>${c.name}</h4><small>${c.meta}</small>${postLink(byId(c.id)) ? `<a class="c-link" href="${postLink(byId(c.id))}" target="_blank" rel="noopener">№${c.id} · Telegram'da ko'rish</a>` : ""}</div>
         <div class="qty">
           <button class="cbtn soft xs" data-qty="${c.key}" data-d="-1" aria-label="Kamaytirish">${icon("i-minus")}</button>${c.qty}
           <button class="cbtn dark xs" data-qty="${c.key}" data-d="1" aria-label="Ko'paytirish">${icon("i-plus")}</button>
-        </div></div>`).join("")
+        </div>
+        <button class="c-del" data-remove="${c.key}" aria-label="O'chirish">${icon("i-close")}</button></div>`).join("")
     : `<p class="cart-empty">Savat hozircha bo'sh</p>`;
-  const lines = state.cart.map((c, i) => `${i + 1}. ${c.name} — ${c.meta} — ${c.qty} ta`).join("\n");
+  const lines = state.cart.map((c, i) => { const l = postLink(byId(c.id)); return `${i + 1}. ${c.name} (№${c.id}) — ${c.meta} — ${c.qty} ta${l ? "\n   " + l : ""}`; }).join("\n");
+  $("#clearCart").hidden = !state.cart.length;
   const ch = $("#checkout");
   ch.href = tgLink(`Assalomu alaykum! Saytdan buyurtma:\n${lines}\n\nNarxi va mavjudligini aytib bera olasizmi?`);
   ch.classList.toggle("disabled", !state.cart.length);
@@ -281,6 +286,8 @@ document.addEventListener("click", (e) => {
   if (t.id === "more") { shown += PAGE; renderGrid(); return; }
   if (t.dataset.open) { openModal(t.dataset.open); return; }
   if (t.dataset.qty) changeQty(t.dataset.qty, +t.dataset.d);
+  if (t.dataset.remove) { state.cart = state.cart.filter((c) => c.key !== t.dataset.remove); saveCart(); }
+  if (t.id === "clearCart" && confirm("Savat tozalansinmi?")) { state.cart = []; saveCart(); }
   if (t.dataset.mv) { modalV = +t.dataset.mv; renderModal(); }
   if (t.dataset.fv) { featV = +t.dataset.fv; renderFeatured(); }
   if (t.hasAttribute("data-open-cart")) { closeModal(); openCart(); }
