@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anfora Gold — Oltin zargarlik katalogi</title>
+  <meta name="description" content="Anfora Gold — oltin zanjirlar, bilaguzuklar va zirak to'plamlari. Chorsu, Gold Center, 56-do'kon." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="images/icon-180.png" />
+  <meta name="theme-color" content="#111113" />
+  <!-- Telegram, WhatsApp va boshqa joylarda havola ko'rinishi -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Anfora Gold" />
+  <meta property="og:title" content="Anfora Gold — oltin zargarlik katalogi" />
+  <meta property="og:description" content="Uzuklar, zirak to'plamlari, zanjirlar va bilaguzuklar. Chorsu bozori, Gold Centre, 1-qavat, 56-do'kon." />
+  <meta property="og:image" content="images/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "JewelryStore",
+    "name": "Anfora Gold",
+    "telephone": "+998935891412",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Chorsu bozori, Gold Centre, 1-qavat, 56-do'kon (Sakichmon ko'chasi, 1A)",
+      "addressLocality": "Toshkent",
+      "addressCountry": "UZ"
+    },
+    "sameAs": ["https://t.me/anfora_gold"]
+  }
+  </script>
+</head>
+<body>
+  <div class="blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <!-- ===== Menyu ===== -->
+  <header class="nav glass">
+    <a href="#" class="logo">
+      <svg class="i"><use href="#i-ring" /></svg>
+      <span>ANFORA GOLD</span>
+    </a>
+    <nav class="menu">
+      <a href="#" class="active">Bosh sahifa</a>
+      <a href="#katalog">Katalog</a>
+      <a href="#tartib">Buyurtma</a>
+      <a href="#aloqa">Aloqa</a>
+    </nav>
+    <div class="nav-actions">
+      <label class="search">
+        <svg class="i"><use href="#i-search" /></svg>
+        <input id="search" type="search" placeholder="Uzuk, zanjir qidirish..." />
+      </label>
+      <button class="cbtn dark cart-btn" data-open-cart aria-label="Savat">
+        <svg class="i"><use href="#i-bag" /></svg>
+        <b class="badge" id="cartCount">0</b>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="hero-card">
+        <div class="hero-text">
+          <span class="chip-dark"><i class="dot"></i> 585 va 750 proba · Chorsu, Gold Center</span>
+          <h1>Har bir lahzaga<br />munosib oltin</h1>
+          <p>Uzuklar, zirak to'plamlari, zanjirlar va bilaguzuklar — har bir buyumning o'lchami va og'irligi bilan. Tanlang, biz narx va mavjudligini darhol aytamiz.</p>
+          <div class="row">
+            <a href="#katalog" class="pill light">Katalogni ko'rish <span class="pill-ic"><svg class="i"><use href="#i-arrow" /></svg></span></a>
+            <a href="https://t.me/anfora_gold" target="_blank" rel="noopener" class="pill ghost">Telegram kanal</a>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img src="images/marjon-doira-kulon.jpg" alt="Doira kulonli marjon" />
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <a href="#katalog" data-filter="zirak" class="side-card white">
+          <div>
+            <h3>Zirak<br />to'plamlari</h3>
+            <p>Sirg'a va uzuk bir to'plamda</p>
+            <span class="pill sm">Ko'rish</span>
+          </div>
+          <div class="ph"><img src="images/toplam-gulli.jpg" alt="Gulli zirak to'plami" /></div>
+        </a>
+        <a href="https://t.me/Muhabbat_goold" target="_blank" rel="noopener" class="side-card glass">
+          <div>
+            <h4>Maxsus buyurtma</h4>
+            <p>O'zingiz xohlagan dizaynni tayyorlaymiz</p>
+          </div>
+          <span class="cbtn dark lg"><svg class="i"><use href="#i-arrow" /></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== Kategoriyalar ===== -->
+    <section class="block">
+      <div class="block-head">
+        <h2>Kategoriyalar</h2>
+        <a href="#katalog" data-filter="all" class="link">Barchasi →</a>
+      </div>
+      <div class="cats" id="cats"></div>
+    </section>
+
+    <!-- ===== Katalog ===== -->
+    <section class="block" id="katalog">
+      <div class="block-head">
+        <div><h2>Katalog</h2><p class="muted small-dark" id="count"></p></div>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="more-wrap"><button class="pill outline" id="more" hidden></button></div>
+      <p class="empty" id="empty" hidden>Hech narsa topilmadi. Boshqa so'z bilan qidirib ko'ring.</p>
+    </section>
+
+    <!-- ===== Kun mahsuloti ===== -->
+    <section class="featured glass">
+      <div class="f-gallery">
+        <div class="f-main"><img id="fImg" alt="" /></div>
+      </div>
+      <div class="f-info">
+        <span class="chip-ink"><i class="dot"></i> Kun mahsuloti</span>
+        <h2 id="fName"></h2>
+        <p class="muted">Bir nechta o'lchamda mavjud. O'lchamni tanlang — og'irligi avtomatik ko'rsatiladi. Videosini Telegram kanalimizda ko'ring.</p>
+        <div class="opt">
+          <span class="label">O'lcham</span>
+          <div class="round-chips" id="fSizes"></div>
+        </div>
+        <div class="f-weight">Og'irligi: <b id="fWeight"></b></div>
+        <hr />
+        <div class="buy">
+          <div class="price"><small id="fPriceLabel"></small><b id="fPrice"></b></div>
+          <button class="pill outline" id="fAdd">Savatga</button>
+          <a class="pill" id="fOrder" target="_blank" rel="noopener">Buyurtma berish <span class="pill-ic inv"><svg class="i"><use href="#i-plus" /></svg></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Buyurtma tartibi ===== -->
+    <section class="block" id="tartib">
+      <h2>Qanday buyurtma beriladi?</h2>
+      <div class="steps">
+        <div class="step"><div class="step-top"><span class="cbtn dark lg"><svg class="i"><use href="#i-bag" /></svg></span><em>01</em></div><h3>Tanlang</h3><p>Katalogdan yoqqan buyumni tanlang va savatga qo'shing.</p></div>
+        <div class="step dark"><div class="step-top"><span class="cbtn lg"><svg class="i"><use href="#i-chat" /></svg></span><em>02</em></div><h3>Bog'laning</h3><p>Telegram yoki telefon orqali narx va mavjudlikni aniqlang.</p></div>
+        <div class="step"><div class="step-top"><span class="cbtn dark lg"><svg class="i"><use href="#i-box" /></svg></span><em>03</em></div><h3>Qabul qiling</h3><p>Do'konimizga kelib oling: Chorsu bozori, Gold Centre, 1-qavat, 56-do'kon.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer" id="aloqa">
+    <div class="f-cta">
+      <div>
+        <h2>Kerakli buyumni<br />topa olmadingizmi?</h2>
+        <p>Bizga yozing — topib beramiz yoki maxsus buyurtma bilan tayyorlaymiz.</p>
+      </div>
+      <div class="row">
+        <a href="https://t.me/Muhabbat_goold" target="_blank" rel="noopener" class="pill light">Telegram orqali yozish <span class="pill-ic"><svg class="i"><use href="#i-arrow" /></svg></span></a>
+        <a href="tel:+998935891412" class="pill ghost">Qo'ng'iroq qilish</a>
+      </div>
+    </div>
+    <div class="f-cols">
+      <div>
+        <a href="#" class="logo light"><svg class="i"><use href="#i-ring" /></svg><span>ANFORA GOLD</span></a>
+        <p class="small">© 2026 Anfora Gold</p>
+      </div>
+      <div>
+        <h5>Katalog</h5>
+        <a href="#katalog" data-filter="uzuk">Uzuklar</a>
+        <a href="#katalog" data-filter="zirak">Zirak to'plamlari</a>
+        <a href="#katalog" data-filter="zanjir">Zanjir va marjonlar</a>
+        <a href="#katalog" data-filter="bilaguzuk">Bilaguzuklar</a>
+      </div>
+      <div>
+        <h5>Aloqa</h5>
+        <a href="tel:+998935891412">+998 93 589 14 12</a>
+        <a href="https://t.me/Muhabbat_goold" target="_blank" rel="noopener">Telegram: @Muhabbat_goold</a>
+        <a href="https://t.me/anfora_gold" target="_blank" rel="noopener">Kanal: @anfora_gold</a>
+      </div>
+      <div>
+        <h5>Manzil</h5>
+        <a href="https://yandex.go.link/discovery?action=card&oid=93043103879" target="_blank" rel="noopener">Chorsu bozori, Gold Centre, 1-qavat, 56-do'kon</a>
+        <span>Sakichmon ko'chasi, 1A</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== Telefon uchun pastki menyu ===== -->
+  <nav class="tabbar glass">
+    <a href="#" class="active" aria-label="Bosh sahifa"><svg class="i"><use href="#i-home" /></svg></a>
+    <a href="#katalog" aria-label="Katalog"><svg class="i"><use href="#i-grid" /></svg></a>
+    <button data-open-cart aria-label="Savat"><svg class="i"><use href="#i-bag" /></svg><b class="badge" id="cartCount2">0</b></button>
+    <a href="#aloqa" aria-label="Aloqa"><svg class="i"><use href="#i-chat" /></svg></a>
+  </nav>
+
+  <!-- ===== Savat ===== -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" aria-label="Savat">
+    <div class="drawer-head">
+      <h3>Savatingiz</h3>
+      <button class="cbtn soft" id="closeCart" aria-label="Yopish"><svg class="i"><use href="#i-close" /></svg></button>
+    </div>
+    <div class="drawer-list" id="cartList"></div>
+    <div class="summary">
+      <div><span>Mahsulotlar</span><b id="sumCount">0 ta</b></div>
+      <div><span>Umumiy narx</span><b id="sumTotal">Sotuvchi tasdiqlaydi</b></div>
+    </div>
+    <a class="pill block" id="checkout" target="_blank" rel="noopener">Telegram'da buyurtma berish <span class="pill-ic inv"><svg class="i"><use href="#i-arrow" /></svg></span></a>
+    <p class="note">Buyurtma Telegram orqali tasdiqlanadi</p>
+  </aside>
+
+  <!-- ===== Mahsulot oynasi ===== -->
+  <div class="overlay" id="mOverlay"></div>
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mName">
+    <button class="cbtn soft m-close" id="mClose" aria-label="Yopish"><svg class="i"><use href="#i-close" /></svg></button>
+    <div class="m-gal"><div class="m-img"><img id="mImg" alt="" /></div><div class="m-thumbs" id="mThumbs"></div></div>
+    <div class="m-info">
+      <div class="row"><span class="chip-ink"><i class="dot"></i> <span id="mNote"></span></span><span id="mStatus" class="status"></span></div>
+      <h2 id="mName"></h2>
+      <span class="label" id="mLabel"></span>
+      <div id="mVariants"></div>
+      <p class="price-note" id="mPrice"></p>
+      <p class="muted m-date" id="mDate"></p>
+      <div class="buy">
+        <button class="pill outline" id="mAdd">Savatga</button>
+        <a class="pill" id="mOrder" target="_blank" rel="noopener">Narxini so'rash <span class="pill-ic inv"><svg class="i"><use href="#i-arrow" /></svg></span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Savatga qo'shildi</div>
+
+  <!-- ===== Belgilar (SVG) ===== -->
+  <svg width="0" height="0" style="position:absolute">
+    <symbol id="i-ring" viewBox="0 0 64 64" fill="none" stroke="currentColor"><path d="M22 10H42L48 17L32 30L16 17Z" stroke-width="2.5" stroke-linejoin="round"/><path d="M16 17H48M27 10L32 30M37 10L32 30" stroke-width="1.2"/><circle cx="32" cy="40" r="17" stroke-width="2.5"/></symbol>
+    <symbol id="i-chain" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 14C14 34 24 46 32 46C40 46 50 34 56 14" stroke-dasharray="4 3" stroke-linecap="round"/><path d="M32 46V52"/><path d="M27 52H37L32 60Z" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bracelet" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><ellipse cx="32" cy="34" rx="22" ry="14" stroke-dasharray="5 3"/><path d="M32 48C29 45 26 43 26 40C26 38 27.5 37 29 37C30.5 37 31.5 38 32 39C32.5 38 33.5 37 35 37C36.5 37 38 38 38 40C38 43 35 45 32 48Z" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><circle cx="28" cy="28" r="16"/><path d="M40 40L54 54"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M32 52C32 52 10 39 10 24C10 16 16 11 23 11C27 11 30 13 32 16C34 13 37 11 41 11C48 11 54 16 54 24C54 39 32 52 32 52Z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M14 22H50L47 54H17Z"/><path d="M24 22V18C24 13 27 10 32 10C37 10 40 13 40 18V22"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M32 14V50M14 32H50"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M14 32H50"/></symbol>
+    <symbol id="i-close" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M18 18L46 46M46 18L18 46"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 32H52M38 18L52 32L38 46"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M10 14H54V44H26L14 54V44H10Z"/></symbol>
+    <symbol id="i-box" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M10 20L32 10L54 20V46L32 56L10 46Z M10 20L32 30L54 20M32 30V56"/></symbol>
+    <symbol id="i-home" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M10 28L32 10L54 28V54H10Z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4"><rect x="10" y="10" width="18" height="18" rx="4"/><rect x="36" y="10" width="18" height="18" rx="4"/><rect x="10" y="36" width="18" height="18" rx="4"/><rect x="36" y="36" width="18" height="18" rx="4"/></symbol>
+  </svg>
+
+  <script src="products.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

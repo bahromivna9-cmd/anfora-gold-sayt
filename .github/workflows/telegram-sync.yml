@@ -1,0 +1,36 @@
+# Telegram kanaldagi yangi postlarni har 15 daqiqada saytga qo'shadi.
+name: Telegram -> sayt
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: # Actions sahifasida "Run workflow" tugmasi bilan qo'lda ishga tushirish
+
+permissions:
+  contents: write
+
+concurrency:
+  group: telegram-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: ffmpeg
+        run: which ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+      - name: Yangi postlarni olish
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHANNEL: anfora_gold
+        run: node tools/sync-bot.js
+      - name: O'zgarishlarni saqlash
+        run: |
+          git config user.name "anfora-bot"
+          git config user.email "anfora-bot@users.noreply.github.com"
+          git add -A products.js tools/products.json tools/state.json images/tg || true
+          if git diff --cached --quiet; then echo "O'zgarish yo'q"; else git commit -m "Telegram: yangi mahsulotlar" && git push; fi
