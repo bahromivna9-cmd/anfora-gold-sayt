@@ -6,6 +6,9 @@
 
 // Kunlik narx. 1 gramm narxini yozsangiz, saytda taxminiy narx
 // avtomatik hisoblanadi. Bo'sh qoldirilsa (null), narx ko'rsatilmaydi.
+// Versiya belgisi — admin panel eski qoralamani aniqlashi uchun
+const DATA_STAMP = "2026-11-20T00:00:00Z";
+
 const SETTINGS = {
   pricePerGram: null,      // masalan: 1250000  (so'mda)
   priceDate: "",           // masalan: "2026-11-16"
