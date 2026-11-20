@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-19T17:12:07.008Z",
+ "updated": "2026-11-20T07:39:06.070Z",
  "products": [
   {
    "id": 6350,
@@ -507,13 +507,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6269-1.jpg",
+   "imgs": [
+    "images/tg/6269-1.jpg"
+   ],
    "caption": "50 sm 5.82gram \n55sm 6.12gram\n60sm 6.82gram",
    "msgs": [
     6269
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6267,
@@ -533,13 +534,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6267-1.jpg",
+   "imgs": [
+    "images/tg/6267-1.jpg"
+   ],
    "caption": "17 razmer 0.90gram \n18 razmer 0.91gram \n18 razmer 0.95gram",
    "msgs": [
     6267
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6265,
@@ -1989,13 +1991,15 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6095-1.jpg",
+   "imgs": [
+    "images/tg/6095-1.jpg",
+    "images/tg/6095-2.jpg"
+   ],
    "caption": "17.5 razmer 1.40gram \n2.91gram\nZO",
    "msgs": [
     6095
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6091,
@@ -2015,13 +2019,15 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6091-1.jpg",
+   "imgs": [
+    "images/tg/6091-1.jpg",
+    "images/tg/6091-2.jpg"
+   ],
    "caption": "1.92gram ,\n1.94gram",
    "msgs": [
     6091
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6087,
@@ -2041,13 +2047,15 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6087-1.jpg",
+   "imgs": [
+    "images/tg/6087-1.jpg",
+    "images/tg/6087-2.jpg"
+   ],
    "caption": "18.5 razmer 1.45gram \n3.46grsm",
    "msgs": [
     6087
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6083,
@@ -2067,13 +2075,15 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6083-1.jpg",
+   "imgs": [
+    "images/tg/6083-1.jpg",
+    "images/tg/6083-2.jpg"
+   ],
    "caption": "17 razmer 0.90gram \n2.90gram",
    "msgs": [
     6083
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6079,
@@ -2093,13 +2103,15 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6079-1.jpg",
+   "imgs": [
+    "images/tg/6079-1.jpg",
+    "images/tg/6079-2.jpg"
+   ],
    "caption": "18.5 razmer 2.03gram \n3.72gram\n\ud835",
    "msgs": [
     6079
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6075,
@@ -2146,13 +2158,15 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6071-1.jpg",
+   "imgs": [
+    "images/tg/6071-1.jpg",
+    "images/tg/6071-2.jpg"
+   ],
    "caption": "18 razmer 3.07gram \n4.70gram",
    "msgs": [
     6071
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6067,
@@ -2172,13 +2186,15 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6067-1.jpg",
+   "imgs": [
+    "images/tg/6067-1.jpg",
+    "images/tg/6067-2.jpg"
+   ],
    "caption": "18 razmer 2.2gr \n4.82gram",
    "msgs": [
     6067
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6063,
@@ -2198,13 +2214,15 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6063-1.jpg",
+   "imgs": [
+    "images/tg/6063-1.jpg",
+    "images/tg/6063-2.jpg"
+   ],
    "caption": "18 razmer 2.36gram \n3.54gram\nДO\nA",
    "msgs": [
     6063
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6060,
@@ -2224,13 +2242,15 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6060-1.jpg",
+   "imgs": [
+    "images/tg/6060-1.jpg",
+    "images/tg/6060-2.jpg"
+   ],
    "caption": "18.5 razmer : 1.96gram \n3.38gram\nA",
    "msgs": [
     6060
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6058,
@@ -2270,13 +2290,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6058-1.jpg",
+   "imgs": [
+    "images/tg/6058-1.jpg"
+   ],
    "caption": "15.5 razmer 1.09gram \n16 razmer 1.17gram 1.15gram 1.13gram \n16.5 razmer 1.19gram \n17 razmer 1.25gram\n18 razmer1.24 gram \n18.5 razmer 1.25 gram \n19 razmer 1.21gram\nA",
    "msgs": [
     6058
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6056,
@@ -2324,13 +2345,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6056-1.jpg",
+   "imgs": [
+    "images/tg/6056-1.jpg"
+   ],
    "caption": "16 razmer 1.53gram \n16.5 razmer 1.57 gram \n17 razmer 1.54gram \n17.5 razmer 1.66gram 1.56gram\n18 razmer 1.58gram  1.71gram \n18.5 razmer 1.62gram \n19 razmer 1.62gram \n19.5 razmer 1.63gram \n20.5 razmer 1.68gram\nS\nA",
    "msgs": [
     6056
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6054,
@@ -2358,13 +2380,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6054-1.jpg",
+   "imgs": [
+    "images/tg/6054-1.jpg"
+   ],
    "caption": "18 razmer 2.62gram \n18.5 razmer 2.61gram \n19 razmer 2.82gram \n19.5 razmer 2.72gram\nA",
    "msgs": [
     6054
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6052,
@@ -2392,13 +2415,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6052-1.jpg",
+   "imgs": [
+    "images/tg/6052-1.jpg"
+   ],
    "caption": "16.5 razmer 2.50gram \n17 razmer 2.02gram \n18.5 razmer 2.45gram \n19 razmer 2.48 gram",
    "msgs": [
     6052
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6050,
@@ -2414,13 +2438,14 @@
     ]
    ],
    "note": "Oq oltin",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6050-1.jpg",
+   "imgs": [
+    "images/tg/6050-1.jpg"
+   ],
    "caption": "Oq tilla 3.76gram\n\nA",
    "msgs": [
     6050
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6048,
@@ -2436,13 +2461,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6048-1.jpg",
+   "imgs": [
+    "images/tg/6048-1.jpg"
+   ],
    "caption": "3.10gram",
    "msgs": [
     6048
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6046,
@@ -2458,13 +2484,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6046-1.jpg",
+   "imgs": [
+    "images/tg/6046-1.jpg"
+   ],
    "caption": "3.04gram",
    "msgs": [
     6046
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6044,
@@ -2480,13 +2507,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6044-1.jpg",
+   "imgs": [
+    "images/tg/6044-1.jpg"
+   ],
    "caption": "2.92gram",
    "msgs": [
     6044
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6042,
@@ -2594,13 +2622,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6034-1.jpg",
+   "imgs": [
+    "images/tg/6034-1.jpg"
+   ],
    "caption": "3.53gram",
    "msgs": [
     6034
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6032,
