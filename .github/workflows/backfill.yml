@@ -25,6 +25,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: ffmpeg (videodan katta kadr olish uchun)
+        run: |
+          if ! command -v ffmpeg >/dev/null; then
+            npm i --no-save --prefix "$RUNNER_TEMP/ff" ffmpeg-static@5
+            dirname "$(node -p "require('$RUNNER_TEMP/ff/node_modules/ffmpeg-static')")" >> "$GITHUB_PATH"
+          fi
       - name: Rasmlarni yuklash
         env:
           CHANNEL: anfora_gold
