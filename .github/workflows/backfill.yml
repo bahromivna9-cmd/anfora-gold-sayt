@@ -1,0 +1,40 @@
+name: Rasmlarni to'ldirish
+
+# Rasmsiz (yashirin) mahsulotlarga rasmni Telegram widget sahifasidan oladi.
+# Actions -> "Rasmlarni to'ldirish" -> Run workflow
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Nechta mahsulot (bo'sh = hammasi)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: backfill
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Rasmlarni yuklash
+        env:
+          CHANNEL: anfora_gold
+          LIMIT: ${{ github.event.inputs.limit }}
+        run: node tools/backfill-embed.js
+      - name: Saqlash
+        run: |
+          git config user.name "anfora-bot"
+          git config user.email "anfora-bot@users.noreply.github.com"
+          git add -A products.js tools/products.json images/tg
+          if git diff --cached --quiet; then echo "O'zgarish yo'q"; exit 0; fi
+          git commit -m "Rasmsiz mahsulotlarga rasm qo'shildi"
+          for i in 1 2 3; do git pull --rebase origin main && git push && break; sleep 5; done
