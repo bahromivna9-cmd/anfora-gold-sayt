@@ -3,7 +3,8 @@ name: Telegram -> sayt
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    # Soat boshidan tashqari daqiqalar — GitHub navbati kamroq
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch: # Actions sahifasida "Run workflow" tugmasi bilan qo'lda ishga tushirish
 
 permissions:
