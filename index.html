@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=4" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="images/icon-180.png" />
   <meta name="theme-color" content="#111113" />
@@ -257,8 +257,14 @@
     <symbol id="i-grid" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4"><rect x="10" y="10" width="18" height="18" rx="4"/><rect x="36" y="10" width="18" height="18" rx="4"/><rect x="10" y="36" width="18" height="18" rx="4"/><rect x="36" y="36" width="18" height="18" rx="4"/></symbol>
   </svg>
 
-  <script src="products.js"></script>
-  <script src="data.js?v=3"></script>
-  <script src="script.js?v=3"></script>
+  <script>
+    // products.js va data.js har safar yangi holda yuklanadi (narx va yangi mahsulotlar darhol chiqishi uchun)
+    (function () {
+      var t = Math.floor(Date.now() / 60000);
+      ["products.js?t=" + t, "data.js?t=" + t, "script.js?v=4"].forEach(function (src) {
+        var s = document.createElement("script"); s.src = src; s.async = false; document.body.appendChild(s);
+      });
+    })();
+  </script>
 </body>
 </html>
