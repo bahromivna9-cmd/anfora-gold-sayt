@@ -49,18 +49,37 @@
     </div>
     <div class="row">
       <a href="index.html" target="_blank"><button class="btn light">Saytni ko'rish</button></a>
-      <button class="btn gold" id="export">data.js ni yuklab olish</button>
+      <button class="btn gold" id="publish">Saytga joylash</button>
+    </div>
+  </div>
+
+  <div class="box" id="pending" style="display:none;background:#fff6e0">
+    <div class="top">
+      <div><h2 style="margin:0 0 4px">Saytga joylanmagan o'zgarishlar bor</h2>
+      <p class="muted">O'zgarishlar hozircha faqat shu brauzerda turibdi. Mijozlar ko'rishi uchun <b>"Saytga joylash"</b> tugmasini bosing — 1–2 daqiqada saytda chiqadi.</p></div>
+      <button class="btn gold" id="publish2">Saytga joylash</button>
     </div>
   </div>
 
   <div class="box">
     <h2>Qanday ishlatiladi</h2>
     <ol class="muted steps">
-      <li>Quyida narx, holat va mahsulotlarni o'zgartiring (o'zgarishlar shu brauzerda avtomatik saqlanadi).</li>
-      <li><b>"data.js ni yuklab olish"</b> tugmasini bosing.</li>
-      <li>Yuklangan <b>data.js</b> faylini sayt papkasidagi eski <b>data.js</b> o'rniga qo'ying (va internetga qayta joylang).</li>
-      <li>Yangi rasm bo'lsa, uni <b>images</b> papkasiga tashlang va mahsulotda nomini yozing, masalan <b>images/yangi-uzuk.jpg</b>.</li>
+      <li>Quyida narx, holat va mahsulotlarni o'zgartiring.</li>
+      <li><b>"Saytga joylash"</b> tugmasini bosing. 1–2 daqiqadan keyin saytni yangilang (pastga tortib yoki F5).</li>
+      <li>Birinchi marta joylashda GitHub kaliti (token) so'raladi — u faqat shu qurilmada saqlanadi. <a href="#" id="howToken">Kalitni qanday olish?</a></li>
     </ol>
+    <div id="tokenHelp" class="muted" style="display:none;margin-top:12px;padding:14px;background:var(--bg);border-radius:14px">
+      <b>GitHub kalitini olish (bir marta):</b>
+      <ol class="steps" style="margin-top:6px">
+        <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank">github.com/settings/personal-access-tokens/new</a> sahifasini oching.</li>
+        <li>Token name: <b>anfora-admin</b>, Expiration: <b>1 yil</b> (yoki xohlaganingiz).</li>
+        <li>Repository access: <b>Only select repositories</b> → <b>anfora-gold-sayt</b>.</li>
+        <li>Permissions → Repository permissions → <b>Contents: Read and write</b>.</li>
+        <li><b>Generate token</b> → chiqqan kalitni nusxalang va shu yerda "Saytga joylash" bosilganda chiqadigan oynaga qo'ying.</li>
+      </ol>
+      <p style="margin-top:6px">Kalitni hech kimga yubormang. Boshqa kompyuterda admin ochsangiz, kalitni o'sha yerda qayta kiritasiz.</p>
+      <div class="row" style="margin-top:10px"><button class="btn light" id="forgetToken">Bu qurilmadan kalitni o'chirish</button> <button class="btn light" id="export">Zaxira: data.js ni yuklab olish</button></div>
+    </div>
   </div>
 
   <div class="box">
@@ -70,6 +89,7 @@
       <label>Sana<input id="pdate" type="date" /></label>
       <button class="btn light" id="clearPrice">Narxni yashirish</button>
     </div>
+    <p id="ppgPreview" style="margin-top:12px;font-weight:600"></p>
     <p class="muted" style="margin-top:10px">Narx kiritilsa, saytda har bir buyumning taxminiy narxi (og'irlik × 1 gramm narxi) ko'rsatiladi. Bo'sh qoldirilsa, "So'rov bo'yicha" yoziladi.</p>
   </div>
 
@@ -77,7 +97,7 @@
     <div class="top" style="margin-bottom:12px">
       <h2 style="margin:0">Mahsulotlar (<span id="cnt"></span>)</h2>
       <div class="row">
-        <input id="q" placeholder="Qidirish..." /><select id="filter"><option value="">Barcha holatlar</option></select><select id="fcat"><option value="">Barcha kategoriyalar</option></select>
+        <input id="q" placeholder="Qidirish..." /><select id="filter"><option value="">Barcha holatlar</option></select><select id="fcat"><option value="">Barcha kategoriyalar</option></select><select id="fvis"><option value="">Hammasi</option><option value="shown">Saytdagilar</option><option value="hidden">Yashirinlar</option></select>
         <button class="btn" id="add">+ Yangi mahsulot</button>
       </div>
     </div>
@@ -87,11 +107,12 @@
         <tbody id="list"></tbody>
       </table>
     </div>
+    <div style="text-align:center;margin-top:14px"><button class="btn light" id="more">Yana ko'rsatish</button></div>
   </div>
 
   <div class="box">
     <div class="top"><h2 style="margin:0">Asl holatga qaytarish</h2><button class="btn red" id="reset">Barcha o'zgarishlarni bekor qilish</button></div>
-    <p class="muted" style="margin-top:8px">Brauzerda saqlangan o'zgarishlarni o'chirib, data.js faylidagi holatga qaytaradi.</p>
+    <p class="muted" style="margin-top:8px">Saytga hali joylanmagan o'zgarishlarni o'chirib, saytdagi holatga qaytaradi.</p>
   </div>
 </div>
 
@@ -130,17 +151,31 @@
 </dialog>
 <div class="toast" id="toast"></div>
 
-<script src="products.js"></script>
-<script src="data.js"></script>
 <script>
-const KEY = "ag_admin_v2";
+// products.js va data.js keshsiz yuklanadi, keyin admin ishga tushadi
+(function load(list) {
+  if (!list.length) return init();
+  const s = document.createElement("script"); s.src = list[0] + "?t=" + Date.now();
+  s.onload = () => load(list.slice(1)); s.onerror = () => alert(list[0] + " yuklanmadi. Internetni tekshiring.");
+  document.body.appendChild(s);
+})(["products.js", "data.js"]);
+
+function init() {
+const KEY = "ag_admin_v3";
+const TOKEN_KEY = "ag_gh_token";
+const REPO = "bahromivna9-cmd/anfora-gold-sayt";
+const STAMP = typeof DATA_STAMP !== "undefined" ? DATA_STAMP : "";
 const STATUSES = { sotuvda: "Sotuvda", aniqlanmoqda: "Mavjudligini so'rang", buyurtmaga: "Buyurtma asosida", sotilgan: "Sotilgan" };
 const $ = (s) => document.querySelector(s);
 const AUTO_LIST = typeof AUTO !== "undefined" ? AUTO.products : [];
+const fresh = () => ({ base: STAMP, dirty: false, settings: { ...SETTINGS }, overrides: JSON.parse(JSON.stringify(OVERRIDES || {})), manual: JSON.parse(JSON.stringify(MANUAL_PRODUCTS || [])), featured: typeof FEATURED_ID !== "undefined" ? FEATURED_ID : "" });
 let db;
 try { db = JSON.parse(localStorage.getItem(KEY)); } catch {}
-if (!db) db = { settings: { ...SETTINGS }, overrides: JSON.parse(JSON.stringify(OVERRIDES || {})), manual: JSON.parse(JSON.stringify(MANUAL_PRODUCTS || [])), featured: typeof FEATURED_ID !== "undefined" ? FEATURED_ID : "" };
-const save = () => { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch {} };
+try { localStorage.removeItem("ag_admin_v2"); } catch {}
+// Qoralama saytdagi versiyadan eski bo'lsa yoki joylanmagan o'zgarish bo'lmasa — saytdagi holat olinadi
+if (!db || !db.dirty || (db.base !== STAMP && !confirm("Saytdagi ma'lumot yangilangan, lekin bu qurilmada joylanmagan eski o'zgarishlar bor.\n\nOK — eski o'zgarishlarni davom ettirish\nBekor qilish — saytdagi yangi holatni ochish"))) db = fresh();
+const markPending = () => { $("#pending").style.display = db.dirty ? "" : "none"; };
+const save = (keepClean) => { if (!keepClean) db.dirty = true; try { localStorage.setItem(KEY, JSON.stringify(db)); } catch {} markPending(); };
 const toast = (t) => { const e = $("#toast"); e.textContent = t; e.classList.add("show"); setTimeout(() => e.classList.remove("show"), 1800); };
 const cats = CATEGORIES.filter((c) => c.id !== "all");
 const catName = (id) => (cats.find((c) => c.id === id) || {}).name || id;
@@ -156,21 +191,36 @@ function setOv(id, patch) { db.overrides[id] = { ...(db.overrides[id] || {}), ..
 // narx
 $("#ppg").value = db.settings.pricePerGram || "";
 $("#pdate").value = db.settings.priceDate || "";
-$("#ppg").oninput = () => { db.settings.pricePerGram = Number($("#ppg").value) || null; save(); };
+const som = (n) => (Math.round(n / 1000) * 1000).toLocaleString("ru-RU").replace(/\u00a0/g, " ") + " so'm";
+function preview() {
+  const v = Number(db.settings.pricePerGram);
+  $("#ppgPreview").textContent = v > 0 ? `Misol: 2 g uzuk ≈ ${som(2 * v)}, 5 g zanjir ≈ ${som(5 * v)}` : "Narx kiritilmagan — saytda \"So'rov bo'yicha\" yoziladi.";
+}
+$("#ppg").oninput = () => {
+  db.settings.pricePerGram = Number($("#ppg").value) || null;
+  if (!db.settings.priceDate) { db.settings.priceDate = new Date().toISOString().slice(0, 10); $("#pdate").value = db.settings.priceDate; }
+  save(); preview();
+};
 $("#pdate").oninput = () => { db.settings.priceDate = $("#pdate").value; save(); };
-$("#clearPrice").onclick = () => { db.settings = { pricePerGram: null, priceDate: "" }; $("#ppg").value = ""; $("#pdate").value = ""; save(); toast("Narx yashirildi"); };
+$("#clearPrice").onclick = () => { db.settings = { pricePerGram: null, priceDate: "" }; $("#ppg").value = ""; $("#pdate").value = ""; save(); preview(); toast("Narx yashirildi — saytga joylashni unutmang"); };
+preview();
 
 // ro'yxat
 $("#filter").innerHTML += opts(STATUSES);
 $("#fcat").innerHTML += opts(Object.fromEntries(cats.map((c) => [c.id, c.name])));
-["#filter", "#fcat"].forEach((s) => ($(s).onchange = render));
-$("#q").oninput = render;
+let limit = 60;
+["#filter", "#fcat", "#fvis"].forEach((s) => ($(s).onchange = () => { limit = 60; render(); }));
+$("#q").oninput = () => { limit = 60; render(); };
+$("#more").onclick = () => { limit += 60; render(); };
 function render() {
-  const f = $("#filter").value, fc = $("#fcat").value, q = $("#q").value.toLowerCase();
-  const list = all().filter((p) => (!f || p.status === f) && (!fc || p.cat === fc) && (!q || (p.name + " " + (p.caption || "")).toLowerCase().includes(q)));
+  const f = $("#filter").value, fc = $("#fcat").value, fv = $("#fvis").value, q = $("#q").value.toLowerCase();
+  const found = all().filter((p) => (!f || p.status === f) && (!fc || p.cat === fc) && (!fv || (fv === "hidden") === !!p.hidden) && (!q || (p.name + " " + (p.caption || "") + " " + p.id).toLowerCase().includes(q)));
+  const list = found.slice(0, limit);
+  $("#more").style.display = found.length > limit ? "" : "none";
+  $("#more").textContent = `Yana ko'rsatish (${found.length - limit} ta qoldi)`;
   $("#cnt").textContent = `${all().filter((p) => !p.hidden).length} ta saytda, ${all().filter((p) => p.hidden).length} ta yashirin`;
   $("#list").innerHTML = list.map((p) => `<tr style="${p.hidden ? "opacity:.45" : ""}">
-    <td><img src="${p.img || (p.imgs || [])[0] || ""}" alt="" onerror="this.style.visibility='hidden'"></td>
+    <td><img loading="lazy" src="${p.img || (p.imgs || [])[0] || ""}" alt="" onerror="this.style.visibility='hidden'"></td>
     <td><b>${p.name}</b>${String(db.featured) === String(p.id) ? ' <span style="color:var(--gold)">★ kun mahsuloti</span>' : ""}${p.hidden ? " <i>(yashirin)</i>" : ""}<div class="muted">${catName(p.cat)} · ${p.variants.map((v) => v.join(" — ")).join(", ").slice(0, 70)}</div></td>
     <td class="hide-m">${catName(p.cat)}</td>
     <td><select data-st="${p.id}">${opts(STATUSES, p.status)}</select></td>
@@ -238,7 +288,7 @@ form.onsubmit = (e) => {
 
 // eksport
 const q = (s) => JSON.stringify(s);
-function buildFile() {
+function buildFile(stamp) {
   const man = db.manual.map((p) => {
     const parts = [`id: ${q(p.id)}`, `date: ${q(p.date || "")}`, `status: ${q(p.status)}`, `cat: ${q(p.cat)}`, `name: ${q(p.name)}`, `img: ${q(p.img)}`];
     if (p.isNew) parts.push("isNew: true");
@@ -250,6 +300,8 @@ function buildFile() {
    ANFORA GOLD — MA'LUMOTLAR FAYLI (admin.html orqali yaratilgan: ${new Date().toLocaleString("ru-RU")})
    Telegram'dan avtomatik kelgan mahsulotlar products.js da.
    ========================================================= */
+
+const DATA_STAMP = ${q(stamp || STAMP)};
 
 const SETTINGS = {
   pricePerGram: ${db.settings.pricePerGram || null},
@@ -272,12 +324,49 @@ const FEATURED_ID = ${q(db.featured || "")};
 `;
 }
 $("#export").onclick = () => {
-  const blob = new Blob([buildFile()], { type: "text/javascript" });
+  const blob = new Blob([buildFile(new Date().toISOString())], { type: "text/javascript" });
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "data.js"; a.click();
   toast("data.js yuklab olindi — uni sayt papkasiga qo'ying");
 };
-$("#reset").onclick = () => { if (confirm("Barcha o'zgarishlar bekor qilinsinmi?")) { localStorage.removeItem(KEY); location.reload(); } };
+$("#reset").onclick = () => { if (confirm("Joylanmagan o'zgarishlar bekor qilinsinmi?")) { localStorage.removeItem(KEY); location.reload(); } };
+
+// Saytga joylash (GitHub orqali data.js ni yangilaydi)
+$("#howToken").onclick = (e) => { e.preventDefault(); const h = $("#tokenHelp"); h.style.display = h.style.display === "none" ? "" : "none"; };
+$("#forgetToken").onclick = () => { localStorage.removeItem(TOKEN_KEY); toast("Kalit bu qurilmadan o'chirildi"); };
+const b64 = (str) => { const bytes = new TextEncoder().encode(str); let bin = ""; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000)); return btoa(bin); };
+let busy = false;
+async function publish() {
+  if (busy) return;
+  let token = localStorage.getItem(TOKEN_KEY);
+  if (!token) {
+    token = (prompt("GitHub kalitini (token) kiriting.\nU faqat shu qurilmada saqlanadi.\n\nKalit yo'q bo'lsa — Bekor qilish bosing va \"Kalitni qanday olish?\" havolasini oching.") || "").trim();
+    if (!token) { $("#tokenHelp").style.display = ""; return; }
+  }
+  busy = true; toast("Joylanmoqda...");
+  const url = `https://api.github.com/repos/${REPO}/contents/data.js`;
+  const headers = { Authorization: "Bearer " + token, Accept: "application/vnd.github+json" };
+  try {
+    const cur = await fetch(url + "?ref=main&t=" + Date.now(), { headers, cache: "no-store" });
+    if (cur.status === 401 || cur.status === 403 || cur.status === 404) throw new Error("KEY");
+    if (!cur.ok) throw new Error("GitHub javobi: " + cur.status);
+    const { sha } = await cur.json();
+    const stamp = new Date().toISOString();
+    const res = await fetch(url, { method: "PUT", headers, body: JSON.stringify({ message: "Admin: ma'lumotlar yangilandi", content: b64(buildFile(stamp)), sha, branch: "main" }) });
+    if (res.status === 401 || res.status === 403) throw new Error("KEY");
+    if (!res.ok) throw new Error("GitHub javobi: " + res.status);
+    localStorage.setItem(TOKEN_KEY, token);
+    db.base = stamp; db.dirty = false; save(true);
+    alert("Saytga joylandi ✅\n1–2 daqiqadan keyin saytni yangilang.");
+  } catch (err) {
+    if (err.message === "KEY") { localStorage.removeItem(TOKEN_KEY); alert("Kalit noto'g'ri yoki ruxsati yetarli emas.\nKalitda anfora-gold-sayt uchun \"Contents: Read and write\" ruxsati bo'lishi kerak."); $("#tokenHelp").style.display = ""; }
+    else alert("Joylab bo'lmadi: " + err.message + "\nInternetni tekshirib, qayta urinib ko'ring.");
+  } finally { busy = false; }
+}
+$("#publish").onclick = publish;
+$("#publish2").onclick = publish;
+markPending();
 render();
+}
 </script>
 </body>
 </html>
