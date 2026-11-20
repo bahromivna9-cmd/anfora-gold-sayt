@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20T07:39:06.070Z",
+ "updated": "2026-11-20T07:43:05.727Z",
  "products": [
   {
    "id": 6350,
@@ -2645,13 +2645,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6032-1.jpg",
+   "imgs": [
+    "images/tg/6032-1.jpg"
+   ],
    "caption": "4.27gram",
    "msgs": [
     6032
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6030,
@@ -2667,13 +2668,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6030-1.jpg",
+   "imgs": [
+    "images/tg/6030-1.jpg"
+   ],
    "caption": "6.04gram\nХМ",
    "msgs": [
     6030
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6028,
@@ -2689,13 +2691,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6028-1.jpg",
+   "imgs": [
+    "images/tg/6028-1.jpg"
+   ],
    "caption": "7.73gram",
    "msgs": [
     6028
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6025,
@@ -2711,13 +2714,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6025-1.jpg",
+   "imgs": [
+    "images/tg/6025-1.jpg"
+   ],
    "caption": "19 razmer 3.30gram\nМА",
    "msgs": [
     6025
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6023,
@@ -2733,13 +2737,14 @@
     ]
    ],
    "note": "",
-   "img": "",
-   "imgs": [],
+   "img": "images/tg/6023-1.jpg",
+   "imgs": [
+    "images/tg/6023-1.jpg"
+   ],
    "caption": "19.5 razmer 2.90gram\nМА\nA",
    "msgs": [
     6023
-   ],
-   "hidden": true
+   ]
   },
   {
    "id": 6021,
