@@ -7,7 +7,7 @@
 // Kunlik narx. 1 gramm narxini yozsangiz, saytda taxminiy narx
 // avtomatik hisoblanadi. Bo'sh qoldirilsa (null), narx ko'rsatilmaydi.
 // Versiya belgisi — admin panel eski qoralamani aniqlashi uchun
-const DATA_STAMP = "2026-11-20T11:00:00Z";
+const DATA_STAMP = "2026-11-21T07:00:00Z";
 
 const SETTINGS = {
   pricePerGram: null,      // masalan: 1250000  (so'mda)
@@ -1031,6 +1031,18 @@ const OVERRIDES = {
   "name": "Oltin bilaguzuk"
  },
  "6350": {
+  "cat": "bilaguzuk",
+  "name": "Oltin bilaguzuk"
+ },
+ "6355": {
+  "cat": "zanjir",
+  "name": "Oltin zanjir"
+ },
+ "6357": {
+  "cat": "zanjir",
+  "name": "Oltin zanjir"
+ },
+ "6359": {
   "cat": "bilaguzuk",
   "name": "Oltin bilaguzuk"
  }
