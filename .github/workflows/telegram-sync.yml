@@ -26,10 +26,20 @@ jobs:
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHANNEL: anfora_gold
+        continue-on-error: true
         run: node tools/sync-bot.js
+      - name: Yangi postlarni olish (botsiz, ochiq sahifalardan)
+        env:
+          CHANNEL: anfora_gold
+        run: |
+          if ! command -v ffmpeg >/dev/null; then
+            npm i --no-save --prefix "$RUNNER_TEMP/ff" ffmpeg-static@5
+            export PATH="$(dirname "$(node -p "require('$RUNNER_TEMP/ff/node_modules/ffmpeg-static')")"):$PATH"
+          fi
+          node tools/sync-web.js
       - name: O'zgarishlarni saqlash
         run: |
           git config user.name "anfora-bot"
           git config user.email "anfora-bot@users.noreply.github.com"
-          git add -A products.js tools/products.json tools/state.json images/tg || true
-          if git diff --cached --quiet; then echo "O'zgarish yo'q"; else git commit -m "Telegram: yangi mahsulotlar" && git push; fi
+          git add -A products.js tools/products.json tools/state.json tools/web-state.json images/tg || true
+          if git diff --cached --quiet; then echo "O'zgarish yo'q"; else git commit -m "Telegram: yangi mahsulotlar" && { git push || { git pull --rebase origin main && git push; }; }; fi
