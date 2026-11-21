@@ -1,6 +1,78 @@
 {
- "updated": "2026-11-20T07:59:06.008Z",
+ "updated": "2026-11-21T06:20:40.050Z",
  "products": [
+  {
+   "id": 6359,
+   "date": "2026-11-20",
+   "status": "aniqlanmoqda",
+   "cat": "boshqa",
+   "name": "Oltin buyum",
+   "vlabel": "Og'irligi",
+   "variants": [
+    [
+     "Og'irligi",
+     "5,92 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6359-1.jpg",
+   "imgs": [
+    "images/tg/6359-1.jpg"
+   ],
+   "caption": "5.92gram",
+   "msgs": [
+    6359,
+    6360
+   ]
+  },
+  {
+   "id": 6357,
+   "date": "2026-11-20",
+   "status": "aniqlanmoqda",
+   "cat": "boshqa",
+   "name": "Oltin buyum",
+   "vlabel": "Og'irligi",
+   "variants": [
+    [
+     "Og'irligi",
+     "15,49 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6357-1.jpg",
+   "imgs": [
+    "images/tg/6357-1.jpg"
+   ],
+   "caption": "15.49gram",
+   "msgs": [
+    6357,
+    6358
+   ]
+  },
+  {
+   "id": 6355,
+   "date": "2026-11-20",
+   "status": "aniqlanmoqda",
+   "cat": "boshqa",
+   "name": "Oltin buyum",
+   "vlabel": "Og'irligi",
+   "variants": [
+    [
+     "Og'irligi",
+     "10,41 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6355-1.jpg",
+   "imgs": [
+    "images/tg/6355-1.jpg"
+   ],
+   "caption": "10.41gram",
+   "msgs": [
+    6355,
+    6356
+   ]
+  },
   {
    "id": 6350,
    "date": "2026-11-18",
