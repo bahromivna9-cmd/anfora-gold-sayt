@@ -335,44 +335,52 @@ $("#reset").onclick = () => { if (confirm("Joylanmagan o'zgarishlar bekor qilins
 $("#howToken").onclick = (e) => { e.preventDefault(); const h = $("#tokenHelp"); h.style.display = h.style.display === "none" ? "" : "none"; };
 $("#forgetToken").onclick = () => { localStorage.removeItem(TOKEN_KEY); toast("Kalit bu qurilmadan o'chirildi"); };
 const b64 = (str) => { const bytes = new TextEncoder().encode(str); let bin = ""; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000)); return btoa(bin); };
+const clean = (s) => (s || "").replace(/\s+/g, "");
+const okToken = (t) => { if (/^(github_pat_|ghp_)/.test(t)) return true; alert("Bu GitHub kaliti emas.\nKalit github_pat_ bilan boshlanadi. GitHub'da Generate/Regenerate token bosgandan keyin chiqqan uzun matnni to'liq nusxalang."); return false; };
 let busy = false;
 async function publish() {
   if (busy) return;
   let token = localStorage.getItem(TOKEN_KEY);
   if (!token) {
-    token = (prompt("GitHub kalitini (token) kiriting.\nU faqat shu qurilmada saqlanadi.\n\nKalit yo'q bo'lsa — Bekor qilish bosing va \"Kalitni qanday olish?\" havolasini oching.") || "").trim();
+    token = clean(prompt("GitHub kalitini (token) kiriting.\nU faqat shu qurilmada saqlanadi.\n\nKalit yo'q bo'lsa — Bekor qilish bosing va \"Kalitni qanday olish?\" havolasini oching.") || "").trim();
     if (!token) { $("#tokenHelp").style.display = ""; return; }
+    if (!okToken(token)) return;
   }
   busy = true; toast("Joylanmoqda...");
   const url = `https://api.github.com/repos/${REPO}/contents/data.js`;
   const headers = { Authorization: "Bearer " + token, Accept: "application/vnd.github+json" };
   try {
     const cur = await fetch(url + "?ref=main&t=" + Date.now(), { headers, cache: "no-store" });
-    if (cur.status === 401 || cur.status === 403 || cur.status === 404) throw new Error("KEY");
+    if (cur.status === 401) throw new Error("BAD");
+    if (cur.status === 403 || cur.status === 404) throw new Error("PERM" + cur.status);
     if (!cur.ok) throw new Error("GitHub javobi: " + cur.status);
     const { sha } = await cur.json();
     const stamp = new Date().toISOString();
     const res = await fetch(url, { method: "PUT", headers, body: JSON.stringify({ message: "Admin: ma'lumotlar yangilandi", content: b64(buildFile(stamp)), sha, branch: "main" }) });
-    if (res.status === 401 || res.status === 403) throw new Error("KEY");
+    if (res.status === 401) throw new Error("BAD");
+    if (res.status === 403 || res.status === 404) throw new Error("PERM" + res.status);
     if (!res.ok) throw new Error("GitHub javobi: " + res.status);
     localStorage.setItem(TOKEN_KEY, token);
     db.base = stamp; db.dirty = false; save(true);
     alert("Saytga joylandi ✅\n1–2 daqiqadan keyin saytni yangilang.");
   } catch (err) {
-    if (err.message === "KEY") { localStorage.removeItem(TOKEN_KEY); alert("Kalit noto'g'ri yoki ruxsati yetarli emas.\nKalitda anfora-gold-sayt uchun \"Contents: Read and write\" ruxsati bo'lishi kerak."); $("#tokenHelp").style.display = ""; }
+    if (err.message === "BAD") { localStorage.removeItem(TOKEN_KEY); alert("GitHub bu kalitni tanimadi (401).\nKalit to'liq nusxalanmagan yoki boshqa narsa qo'yilgan. Kalit github_pat_ bilan boshlanadi.\nGitHub'da anfora-admin → Regenerate token qilib, yangisini qo'ying."); }
+    else if (err.message.startsWith("PERM")) { localStorage.removeItem(TOKEN_KEY); alert("Kalit noto'g'ri yoki ruxsati yetarli emas.\nKalitda anfora-gold-sayt uchun \"Contents: Read and write\" ruxsati bo'lishi kerak."); $("#tokenHelp").style.display = ""; }
     else alert("Joylab bo'lmadi: " + err.message + "\nInternetni tekshirib, qayta urinib ko'ring.");
   } finally { busy = false; }
 }
 $("#publish").onclick = publish;
 // Telegram postlarini darhol saytga olish ("Telegram -> sayt" ishini ishga tushiradi)
 $("#syncNow").onclick = async () => {
-  const token = localStorage.getItem(TOKEN_KEY) || (prompt("GitHub kalitini (token) kiriting:") || "").trim();
+  const token = localStorage.getItem(TOKEN_KEY) || clean(prompt("GitHub kalitini (token) kiriting:"));
   if (!token) { $("#tokenHelp").style.display = ""; return; }
+  if (!okToken(token)) return;
   toast("So'rov yuborilmoqda...");
   try {
     const r = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/telegram-sync.yml/dispatches`, { method: "POST", headers: { Authorization: "Bearer " + token, Accept: "application/vnd.github+json" }, body: JSON.stringify({ ref: "main" }) });
     if (r.status === 204) { localStorage.setItem(TOKEN_KEY, token); alert("Boshlandi ✅\nYangi postlar 2–3 daqiqada saytda chiqadi."); }
-    else if (r.status === 401 || r.status === 403 || r.status === 404) { alert("Kalitda \"Actions: Read and write\" ruxsati yo'q.\nKalit sozlamasiga shu ruxsatni qo'shing."); $("#tokenHelp").style.display = ""; }
+    else if (r.status === 401) { localStorage.removeItem(TOKEN_KEY); alert("GitHub bu kalitni tanimadi (401).\nGitHub'da anfora-admin → Regenerate token qilib, yangisini qo'ying."); }
+    else if (r.status === 403 || r.status === 404) { localStorage.removeItem(TOKEN_KEY); alert("Kalitda \"Actions: Read and write\" ruxsati yo'q.\nKalit sozlamasiga shu ruxsatni qo'shing."); $("#tokenHelp").style.display = ""; }
     else alert("Bo'lmadi: GitHub javobi " + r.status);
   } catch (e) { alert("Internetni tekshiring."); }
 };
