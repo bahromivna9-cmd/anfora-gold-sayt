@@ -54,6 +54,7 @@ function parsePost(html, id) {
     date: date.slice(0, 10),
     members: members.sort((a, b) => a - b),
     thumbs: [...new Set(sharp.length ? sharp : blur)].slice(0, MAX_IMGS),
+    blurOnly: !sharp.length && !videos.length, // "Media is too big" — faqat xira fon bor
     videos: [...new Set(videos)].slice(0, MAX_IMGS),
   };
 }
@@ -71,7 +72,7 @@ async function images(post, gid, tmp) {
       if (out) imgs.push(out);
     }
   }
-  if (!imgs.length) {
+  if (!imgs.length && !post.blurOnly) {
     for (const [i, u] of post.thumbs.entries()) {
       const buf = await get(u, true);
       if (!buf || buf.length < 2000) continue;
@@ -93,6 +94,30 @@ async function images(post, gid, tmp) {
   let last = Math.max(maxKnown, state.last || 0);
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "web-"));
   let misses = 0, added = 0;
+  const DAY = 864e5, now = Date.now();
+  state.pending = (state.pending || []).filter((x) => x.until > now);
+
+  // Gramm yozilmagan postlarni 7 kun davomida qayta tekshirish (keyinroq matn qo'shilishi mumkin)
+  async function handle(id, post) {
+    post.members.forEach((m) => known.add(m));
+    const gid = post.members[0];
+    if (db.products.some((p) => p.id === gid)) return "bor";
+    const p = store.toProduct({ id: gid, date: post.date, caption: post.caption, imgs: [], msgs: post.members });
+    if (!p) return "matnsiz";
+    const imgs = await images(post, gid, tmp);
+    p.img = imgs[0] || ""; p.imgs = imgs;
+    if (!imgs.length) p.hidden = true;
+    store.upsert(db, p);
+    added++;
+    console.log(`+ ${p.name} (${gid}) ${imgs.length} rasm${post.blurOnly ? " — video juda katta, rasm yo'q (yashirin)" : ""}`);
+    return "qo'shildi";
+  }
+  for (const x of [...state.pending]) {
+    const post = parsePost(await get(`https://t.me/${CHANNEL}/${x.id}?embed=1&mode=tme`), x.id);
+    await sleep(300);
+    const r = post ? await handle(x.id, post) : "o'chirilgan";
+    if (r !== "matnsiz") state.pending = state.pending.filter((y) => y.id !== x.id);
+  }
   console.log(`Tekshiruv ${last + 1} dan boshlanadi (ffmpeg: ${store.HAS_FFMPEG ? "bor" : "yo'q"})`);
 
   for (let id = last + 1; id <= last + MAX_SCAN && misses < MISS_LIMIT; id++) {
@@ -102,16 +127,12 @@ async function images(post, gid, tmp) {
     if (!post) { misses++; continue; }
     misses = 0;
     state.last = Math.max(state.last || 0, id);
-    post.members.forEach((m) => known.add(m));
-    const gid = post.members[0];
-    if (db.products.some((p) => p.id === gid)) continue;
-    const imgs = await images(post, gid, tmp);
-    const p = store.toProduct({ id: gid, date: post.date, caption: post.caption, imgs, msgs: post.members });
-    if (!p) { console.log(`- ${gid}: mahsulot posti emas (gramm topilmadi)`); continue; }
-    if (!imgs.length) p.hidden = true;
-    store.upsert(db, p);
-    added++;
-    console.log(`+ ${p.name} (${gid}) ${imgs.length} rasm`);
+    const r = await handle(id, post);
+    if (r === "matnsiz") {
+      const gid = post.members[0];
+      if (!state.pending.some((x) => x.id === gid)) state.pending.push({ id: gid, until: now + 7 * DAY });
+      console.log(`- ${gid}: gramm yozilmagan — 7 kun qayta tekshiriladi`);
+    }
   }
 
   if (added) store.save(db);
