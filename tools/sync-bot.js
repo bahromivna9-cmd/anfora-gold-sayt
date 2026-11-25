@@ -49,20 +49,26 @@ async function imageFor(post, outName) {
 
 (async () => {
   const state = fs.existsSync(STATE_PATH) ? JSON.parse(fs.readFileSync(STATE_PATH, "utf8")) : { offset: 0, groups: {} };
-  const updates = await api("getUpdates", { offset: state.offset, timeout: 0, allowed_updates: ["channel_post", "edited_channel_post"] });
+  // @anfora_gold — kanal emas, supergroup: postlar "message" bo'lib keladi
+  const updates = await api("getUpdates", { offset: state.offset, timeout: 0, allowed_updates: ["channel_post", "edited_channel_post", "message", "edited_message"] });
   if (!updates.length) { console.log("Yangi post yo'q."); return; }
+  // Guruhda faqat adminlar (sotuvchi) yozgan postlar mahsulot hisoblanadi, mijozlar xabari emas
+  let admins = new Set();
+  try { admins = new Set((await api("getChatAdministrators", { chat_id: "@" + CHANNEL })).map((a) => a.user.id)); } catch (e) { console.log("Adminlar ro'yxati olinmadi:", e.message); }
 
   const db = store.load();
   let changed = 0;
   for (const u of updates) {
     state.offset = u.update_id + 1;
-    const post = u.channel_post || u.edited_channel_post;
+    const post = u.channel_post || u.edited_channel_post || u.message || u.edited_message;
     if (!post || (post.chat.username || "").toLowerCase() !== CHANNEL) continue;
+    const fromAdmin = post.chat.type === "channel" || (post.sender_chat && post.sender_chat.id === post.chat.id) || (post.from && admins.has(post.from.id));
+    if (!fromAdmin) continue;
 
     // Albom bo'lsa, hamma qismlar bitta mahsulotga yig'iladi
     const gkey = post.media_group_id || `m${post.message_id}`;
     // Eski postni tahrirlash: mavjud mahsulotni topamiz
-    if (!state.groups[gkey] && u.edited_channel_post) {
+    if (!state.groups[gkey] && (u.edited_channel_post || u.edited_message)) {
       const old = db.products.find((p) => (p.msgs || [p.id]).includes(post.message_id));
       if (old) state.groups[gkey] = { id: old.id, date: old.date, texts: {}, imgs: Object.fromEntries((old.imgs || []).map((x, i) => [`old${i}`, x])), msgs: old.msgs || [old.id] };
     }
