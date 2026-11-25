@@ -1,6 +1,343 @@
 {
- "updated": "2026-11-21T06:20:40.050Z",
+ "updated": "2026-11-25T13:37:11.951Z",
  "products": [
+  {
+   "id": 6411,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "17.5",
+     "2,12 g"
+    ],
+    [
+     "18.5",
+     "2,23 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6411-1.jpg",
+   "imgs": [
+    "images/tg/6411-1.jpg",
+    "images/tg/6411-2.jpg"
+   ],
+   "caption": "17.5 razmer 2.12gram \n18.5 razmer 2.23gram",
+   "msgs": [
+    6411,
+    6412,
+    6413,
+    6414
+   ]
+  },
+  {
+   "id": 6407,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "16.5",
+     "2,65 g"
+    ],
+    [
+     "17.5",
+     "2,62 / 2,68 g"
+    ],
+    [
+     "19.5",
+     "2,75 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6407-1.jpg",
+   "imgs": [
+    "images/tg/6407-1.jpg",
+    "images/tg/6407-2.jpg"
+   ],
+   "caption": "16.5 razmer 2.65gram \n17.5 razmer 2.62gram , 2.68gram \n19.5 razmer 2.75gram",
+   "msgs": [
+    6407,
+    6408,
+    6409,
+    6410
+   ]
+  },
+  {
+   "id": 6403,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "20",
+     "2,24 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6403-1.jpg",
+   "imgs": [
+    "images/tg/6403-1.jpg",
+    "images/tg/6403-2.jpg"
+   ],
+   "caption": "20 razmer 2.24gram",
+   "msgs": [
+    6403,
+    6404,
+    6405,
+    6406
+   ]
+  },
+  {
+   "id": 6401,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "17",
+     "2,12 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6401-1.jpg",
+   "imgs": [
+    "images/tg/6401-1.jpg"
+   ],
+   "caption": "17 razmer 2.12gram",
+   "msgs": [
+    6401,
+    6402
+   ]
+  },
+  {
+   "id": 6397,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "16.5",
+     "2,22 g"
+    ],
+    [
+     "18",
+     "2,49 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6397-1.jpg",
+   "imgs": [
+    "images/tg/6397-1.jpg",
+    "images/tg/6397-2.jpg"
+   ],
+   "caption": "16.5 razmer 2.22gram \n18 razmer 2.49gram",
+   "msgs": [
+    6397,
+    6398,
+    6399,
+    6400
+   ]
+  },
+  {
+   "id": 6393,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "19.5",
+     "1,71 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6393-1.jpg",
+   "imgs": [
+    "images/tg/6393-1.jpg",
+    "images/tg/6393-2.jpg"
+   ],
+   "caption": "19.5 razmer 1.71gram",
+   "msgs": [
+    6393,
+    6394,
+    6395,
+    6396
+   ]
+  },
+  {
+   "id": 6389,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "18",
+     "2,99 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6389-1.jpg",
+   "imgs": [
+    "images/tg/6389-1.jpg",
+    "images/tg/6389-2.jpg"
+   ],
+   "caption": "18 razmer 2.99gram",
+   "msgs": [
+    6389,
+    6390,
+    6391,
+    6392
+   ]
+  },
+  {
+   "id": 6385,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "20",
+     "2,07 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6385-1.jpg",
+   "imgs": [
+    "images/tg/6385-1.jpg",
+    "images/tg/6385-2.jpg"
+   ],
+   "caption": "20 razmer 2.07gram",
+   "msgs": [
+    6385,
+    6386,
+    6387,
+    6388
+   ]
+  },
+  {
+   "id": 6381,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "19.5",
+     "3,02 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6381-1.jpg",
+   "imgs": [
+    "images/tg/6381-1.jpg",
+    "images/tg/6381-2.jpg"
+   ],
+   "caption": "19.5 razmer 3.02gram",
+   "msgs": [
+    6381,
+    6382,
+    6383,
+    6384
+   ]
+  },
+  {
+   "id": 6377,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "18",
+     "2,62 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6377-1.jpg",
+   "imgs": [
+    "images/tg/6377-1.jpg",
+    "images/tg/6377-2.jpg"
+   ],
+   "caption": "18 razmer 2.62gram",
+   "msgs": [
+    6377,
+    6378,
+    6379,
+    6380
+   ]
+  },
+  {
+   "id": 6373,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "18.5",
+     "2,66 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6373-1.jpg",
+   "imgs": [
+    "images/tg/6373-1.jpg",
+    "images/tg/6373-2.jpg"
+   ],
+   "caption": "18.5 razmer 2.66gram",
+   "msgs": [
+    6373,
+    6374,
+    6375,
+    6376
+   ]
+  },
+  {
+   "id": 6369,
+   "date": "2026-11-25",
+   "status": "aniqlanmoqda",
+   "cat": "uzuk",
+   "name": "Tilla uzuk",
+   "vlabel": "O'lcham",
+   "variants": [
+    [
+     "19",
+     "1,97 g"
+    ]
+   ],
+   "note": "",
+   "img": "images/tg/6369-1.jpg",
+   "imgs": [
+    "images/tg/6369-1.jpg",
+    "images/tg/6369-2.jpg"
+   ],
+   "caption": "19 razmer 1.97gram",
+   "msgs": [
+    6369,
+    6370,
+    6371,
+    6372
+   ]
+  },
   {
    "id": 6359,
    "date": "2026-11-20",
