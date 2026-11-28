@@ -20,7 +20,8 @@ const PRODUCTS = (() => {
   list.forEach((p) => {
     if (p.isNew === undefined && newest && p.date) p.isNew = (new Date(newest) - new Date(p.date)) / 864e5 <= NEW_DAYS;
   });
-  return list.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  // aniq rasmli mahsulotlar oldinda, xira rasmlilar (lq) oxirida; har guruh ichida — eng yangisi birinchi
+  return list.sort((a, b) => (a.lq ? 1 : 0) - (b.lq ? 1 : 0) || (b.date || "").localeCompare(a.date || ""));
 })();
 const FEATURED = (() => {
   const f = typeof FEATURED_ID !== "undefined" && PRODUCTS.find((p) => String(p.id) === String(FEATURED_ID));
