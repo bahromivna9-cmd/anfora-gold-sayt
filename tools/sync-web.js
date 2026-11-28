@@ -135,7 +135,7 @@ async function images(post, gid, tmp) {
     }
   }
 
-  if (added) store.save(db);
+  if (store.refreshQuality(db) || added) store.save(db);
   fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 1));
   console.log(`Tayyor: ${added} ta yangi mahsulot.`);
 })().catch((e) => { console.error(e); process.exit(1); });
