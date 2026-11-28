@@ -1,46 +1,64 @@
 /* =========================================================
-   ANFORA GOLD — MA'LUMOTLAR FAYLI
-   Saytdagi barcha ma'lumot shu yerda. Uni qo'lda yoki
-   admin.html sahifasi orqali tahrirlash mumkin.
+   ANFORA GOLD — MA'LUMOTLAR FAYLI (admin.html orqali yaratilgan: 28.11.2026, 23:20:30)
+   Telegram'dan avtomatik kelgan mahsulotlar products.js da.
    ========================================================= */
 
-// Kunlik narx. 1 gramm narxini yozsangiz, saytda taxminiy narx
-// avtomatik hisoblanadi. Bo'sh qoldirilsa (null), narx ko'rsatilmaydi.
-// Versiya belgisi — admin panel eski qoralamani aniqlashi uchun
-const DATA_STAMP = "2026-11-21T07:00:00Z";
+const DATA_STAMP = "2026-11-28T18:20:30.941Z";
 
 const SETTINGS = {
-  pricePerGram: null,      // masalan: 1250000  (so'mda)
-  priceDate: "",           // masalan: "2026-11-16"
+  pricePerGram: 1200000,
+  priceDate: "2026-11-28",
 };
 
-// Mahsulot holati (status):
-//   "sotuvda"       — bor, sotuvda
-//   "aniqlanmoqda"  — kanalga joylangan, mavjudligini so'rash kerak
-//   "buyurtmaga"    — buyurtma asosida tayyorlanadi
-//   "sotilgan"      — sotilgan (saytda kulrang ko'rinadi)
-// date — Telegram kanalga joylangan sana
-
 const CONTACT = {
-  telegram: "Muhabbat_goold",
-  phone: "+998935891412",
+  "telegram": "Muhabbat_goold",
+  "phone": "+998935891412"
 };
 
 const CATEGORIES = [
-  { id: "all", name: "Hammasi", icon: "i-ring" },
-  { id: "uzuk", name: "Uzuklar", icon: "i-ring" },
-  { id: "zirak", name: "Zirak to'plamlari", icon: "i-ring" },
-  { id: "zanjir", name: "Zanjir va marjonlar", icon: "i-chain" },
-  { id: "bilaguzuk", name: "Bilaguzuklar", icon: "i-bracelet" },
-  { id: "toplam", name: "To'liq to'plamlar", icon: "i-chain" },
-  { id: "boshqa", name: "Boshqa buyumlar", icon: "i-ring" },
+  {
+    "id": "all",
+    "name": "Hammasi",
+    "icon": "i-ring"
+  },
+  {
+    "id": "uzuk",
+    "name": "Uzuklar",
+    "icon": "i-ring"
+  },
+  {
+    "id": "zirak",
+    "name": "Zirak to'plamlari",
+    "icon": "i-ring"
+  },
+  {
+    "id": "zanjir",
+    "name": "Zanjir va marjonlar",
+    "icon": "i-chain"
+  },
+  {
+    "id": "bilaguzuk",
+    "name": "Bilaguzuklar",
+    "icon": "i-bracelet"
+  },
+  {
+    "id": "toplam",
+    "name": "To'liq to'plamlar",
+    "icon": "i-chain"
+  },
+  {
+    "id": "boshqa",
+    "name": "Boshqa buyumlar",
+    "icon": "i-ring"
+  }
 ];
 
-// Qo'lda qo'shilgan mahsulotlar (Telegram'dan avtomatik kelganlari products.js da)
-const MANUAL_PRODUCTS = [];
+// Qo'lda qo'shilgan mahsulotlar
+const MANUAL_PRODUCTS = [
 
-// Admin o'zgartirishlari (mahsulot id si bo'yicha): nom, holat, kategoriya, izoh, yashirish
-// Masalan: OVERRIDES = { 412: { name: "Gulli uzuk", status: "sotuvda" }, 415: { hidden: true } };
+];
+
+// Telegram mahsulotlariga admin o'zgartirishlari
 const OVERRIDES = {
  "2716": {
   "cat": "zanjir",
@@ -1048,5 +1066,4 @@ const OVERRIDES = {
  }
 };
 
-// "Kun mahsuloti" (bo'sh bo'lsa — avtomatik tanlanadi)
 const FEATURED_ID = "";
